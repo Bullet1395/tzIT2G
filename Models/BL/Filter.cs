@@ -25,6 +25,10 @@ namespace Models.BL
             this.uniqcode = this.uniqcode;
         }
 
+        public Filter()
+        {
+        }
+
         /// <summary>
         /// Применение фильтров к полученному списку
         /// </summary>

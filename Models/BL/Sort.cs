@@ -18,6 +18,10 @@ namespace Models.BL
             this.direction = direction;
         }
 
+        public Sort()
+        {
+        }
+
         /// <summary>
         /// Сортировка полученного списка
         /// </summary>

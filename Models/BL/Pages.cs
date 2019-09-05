@@ -19,23 +19,28 @@ namespace Models.BL
             this.numberPage = numberPage;
         }
 
+        public Pages()
+        {
+        }
+
         /// <summary>
         /// Получение постраничного списка
         /// </summary>
         /// <param name="optionsPages"></param>
-        /// <param name="listGuidbooks"></param>
+        /// <param name="listObjects"></param>
         /// <returns></returns>
-        public static IEnumerable<GuidbookDTO> GetPages(Pages optionsPages, IEnumerable<GuidbookDTO> listGuidbooks)
-        {
-            
-            if (listGuidbooks.Count()/optionsPages.countOnPage >= optionsPages.numberPage)
+        public static IEnumerable<ObjectInventoryDTO> GetPages(Pages optionsPages, IEnumerable<ObjectInventoryDTO> listObjects)
+        {            
+            if (listObjects.Count()/optionsPages.countOnPage >= optionsPages.numberPage)
             {
-                var pagedList = listGuidbooks.ToPagedList(optionsPages.numberPage, optionsPages.countOnPage);
+                var pagedList = listObjects.ToPagedList(optionsPages.numberPage, optionsPages.countOnPage);
 
                 return pagedList;
             } else
             {
-                return null;
+                var pagedList = listObjects.ToPagedList(1, optionsPages.countOnPage);
+
+                return pagedList;
             }
 
         }

@@ -20,14 +20,16 @@ namespace Models.Interfaces
         /// <param name="optionsSorting">Опции для сортировки</param>
         /// <param name="optionsPages">Опции для постраничного вывода</param>
         /// <returns></returns>
-        IEnumerable<ObjectInventoryDTO> GetObjects(Filter optionsFiltering, Sort[] optionsSorting, Pages optionsPages);
+        Options GetExampleOptions();
 
         /// <summary>
-        /// Получить объект иневнтаризации по его ID
+        /// Получить отфильтрованный/отсротированный/постраничный список объектов инвентаризации 
+        /// или объект по его ID(если указан)
         /// </summary>
-        /// <param name="id">ID объекта</param>
+        /// <param name="id">ID объекта для получения</param>
+        /// <param name="configOpt">КОнфигурация настроек для фильтрации/сортировки/постраничного вывода</param>
         /// <returns></returns>
-        ObjectInventoryDTO GetObject(int id);
+        IEnumerable<ObjectInventoryDTO> GetObjects(int? id, Options configOpt);
 
         /// <summary>
         /// Оббновление объекта инвентаризации

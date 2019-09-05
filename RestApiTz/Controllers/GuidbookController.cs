@@ -19,7 +19,6 @@ namespace RestApiTz.Controllers
     [ApiController]
     public class GuidbookController : ControllerBase
     {
-        //GuidbookService guidBookService = new GuidbookService(new DbRepository.Repositories.GuidbookRepository(new DbRepository.Context()));
         private readonly IGuidBookService guidBookService;
 
         public GuidbookController(IGuidBookService service)
@@ -43,7 +42,7 @@ namespace RestApiTz.Controllers
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<GuidbookDTO, GuidbookView>()).CreateMapper();
             var mGuidbookList = mapper.Map<IEnumerable<GuidbookDTO>, List<GuidbookView>>(guidBookService.GetGuidBooks());
 
-            return new JArray(JsonConvert.SerializeObject(mGuidbookList));
+            return JArray.Parse(JsonConvert.SerializeObject(mGuidbookList));
         }
 
         [HttpGet("{id}", Name = "GetGuidbook")]
@@ -55,7 +54,7 @@ namespace RestApiTz.Controllers
             return JObject.Parse(JsonConvert.SerializeObject(mGuidbook));
         }
 
-        [HttpPut("{value}")]
+        [HttpPut]
         public void Put([FromBody] JToken value)
         {
             var newType = JsonConvert.DeserializeObject<GuidbookView>(value.ToString());

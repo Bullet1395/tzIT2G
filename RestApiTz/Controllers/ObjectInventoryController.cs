@@ -6,6 +6,7 @@ using AutoMapper;
 using DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Models.BL;
 using Models.Interfaces;
 using Models.Services;
 using Newtonsoft.Json;
@@ -18,12 +19,11 @@ namespace RestApiTz.Controllers
     [ApiController]
     public class ObjectInventoryController : ControllerBase
     {
-
         private readonly IObjectInventoryService objectService;
 
         public ObjectInventoryController(IObjectInventoryService service)
         {
-            service = objectService;
+            objectService = service;
         }
 
         [HttpPost]
@@ -36,26 +36,28 @@ namespace RestApiTz.Controllers
             objectService.AddObjectInventory(mObject);
         }
 
-        //[HttpGet]
-        //public JArray Get()
-        //{
-        //    var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ObjectInventoryDTO, ObjectInventoryView>()).CreateMapper();
-        //    var mObjects = mapper.Map<IEnumerable<ObjectInventoryDTO>, List<ObjectInventoryView>>(objectService.GetObjects());
-
-        //    return new JArray(JsonConvert.SerializeObject(mObjects));
-        //}
-
-        [HttpGet("{id}", Name = "GetObjectsFiltSortPage")]
-        public JObject Get(int id)
+        [HttpGet]
+        public JObject Get()
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ObjectInventoryDTO, ObjectInventoryView>()).CreateMapper();
-            var mObject = mapper.Map<ObjectInventoryDTO, ObjectInventoryView>(objectService.GetObject(id));
-
-            return JObject.Parse(JsonConvert.SerializeObject(mObject));
+            return JObject.Parse(JsonConvert.SerializeObject(objectService.GetExampleOptions()));
         }
 
-        [HttpPut("{value}")]
-        public void Put(int id, [FromBody] JToken value)
+        [HttpGet("{id}")]
+        public JArray Get(int id)
+        {
+            return JArray.Parse(JsonConvert.SerializeObject(objectService.GetObjects(id, null)));
+        }
+
+        [Route("FilterSortPage/")]
+        [HttpGet]
+        public JArray Get([FromBody]JToken optionsFilter)
+        {
+            var dOptions = JsonConvert.DeserializeObject<Options>(optionsFilter.ToString());
+            return JArray.Parse(JsonConvert.SerializeObject(objectService.GetObjects(null, dOptions)));            
+        }
+
+        [HttpPut]
+        public void Put([FromBody]JToken value)
         {
             var newType = JsonConvert.DeserializeObject<ObjectInventoryView>(value.ToString());
 

@@ -38,7 +38,7 @@ namespace RestApiTz
             services.AddScoped<IGuidBookService, GuidbookService>();
 
             services.AddScoped<IRepository<ObjectInventory>, ObjectInventoryRepository>();
-            services.AddScoped<IObjectInventoryService>();
+            services.AddScoped<IObjectInventoryService, ObjectInventoryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
