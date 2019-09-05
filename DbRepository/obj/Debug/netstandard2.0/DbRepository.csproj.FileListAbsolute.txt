@@ -1,0 +1,9 @@
+C:\Users\Bullet1395\source\repos\RestApiTz\DbRepository\obj\Debug\netstandard2.0\DbRepository.csproj.CoreCompileInputs.cache
+C:\Users\Bullet1395\source\repos\RestApiTz\DbRepository\obj\Debug\netstandard2.0\DbRepository.AssemblyInfoInputs.cache
+C:\Users\Bullet1395\source\repos\RestApiTz\DbRepository\obj\Debug\netstandard2.0\DbRepository.AssemblyInfo.cs
+C:\Users\Bullet1395\source\repos\RestApiTz\DbRepository\bin\Debug\netstandard2.0\DbRepository.deps.json
+C:\Users\Bullet1395\source\repos\RestApiTz\DbRepository\bin\Debug\netstandard2.0\DbRepository.dll
+C:\Users\Bullet1395\source\repos\RestApiTz\DbRepository\bin\Debug\netstandard2.0\DbRepository.pdb
+C:\Users\Bullet1395\source\repos\RestApiTz\DbRepository\obj\Debug\netstandard2.0\DbRepository.dll
+C:\Users\Bullet1395\source\repos\RestApiTz\DbRepository\obj\Debug\netstandard2.0\DbRepository.pdb
+C:\Users\Bullet1395\source\repos\RestApiTz\DbRepository\obj\Debug\netstandard2.0\DbRepository.csprojAssemblyReference.cache
