@@ -14,22 +14,10 @@ namespace DbRepository
         public DbSet<Guidbook> Guidbooks { get; set; }
         public DbSet<ObjectInventory> ObjectsInventory { get; set; }
 
-        public Context()
-        {
-        }
-
         public Context(DbContextOptions<Context> options) 
             : base(options)
         {
 
-        }        
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=tz;Username=postgres;Password=1");
-            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

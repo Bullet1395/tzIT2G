@@ -64,9 +64,9 @@ namespace Models.Services
                 var mGuidbookList = mapper.Map<IEnumerable<Guidbook>, List<GuidbookDTO>>(db.GetAll());
                 return mGuidbookList;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new NotImplementedException();
+                return null;
             }
             finally
             {
