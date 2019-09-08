@@ -14,7 +14,7 @@ namespace Models.Interfaces
         void AddObjectInventory(ObjectInventoryDTO newObject);
 
         /// <summary>
-        /// Получить отфильтрованный/отсротированный/постраничный список объектов инвентаризации
+        /// Получить пример конфигурации для фильтрации/сортировки/постраничного вывода списка
         /// </summary>
         /// <param name="optionsFiltering">Опции для фильтрации</param>
         /// <param name="optionsSorting">Опции для сортировки</param>
