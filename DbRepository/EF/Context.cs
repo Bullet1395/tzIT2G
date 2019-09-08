@@ -11,7 +11,7 @@ namespace DbRepository
     /// </summary>
     public class Context : DbContext
     {
-        public DbSet<Guidbook> Guidbooks { get; set; }
+        public DbSet<GuidebookTypes> GuidebookTypes { get; set; }
         public DbSet<ObjectInventory> ObjectsInventory { get; set; }
 
         public Context(DbContextOptions<Context> options) 
@@ -44,7 +44,7 @@ namespace DbRepository
                     .HasMaxLength(512);
             });
 
-            modelBuilder.Entity<Guidbook>(entity =>
+            modelBuilder.Entity<GuidebookTypes>(entity =>
             {
                 entity.ToTable("typesobject");
 

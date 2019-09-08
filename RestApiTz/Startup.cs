@@ -36,8 +36,8 @@ namespace RestApiTz
 
             services.AddDbContext<Context>(options => options.UseNpgsql(Configuration.GetConnectionString("PostgreConnection")));
 
-            services.AddScoped<IRepository<Guidbook>, GuidbookRepository>();
-            services.AddScoped<IGuidBookService, GuidbookService>();
+            services.AddScoped<IRepository<GuidebookTypes>, GuidebookTypesRepository>();
+            services.AddScoped<IGuideBookTypesService, GuidebookTypesService>();
 
             services.AddScoped<IRepository<ObjectInventory>, ObjectInventoryRepository>();
             services.AddScoped<IObjectInventoryService, ObjectInventoryService>();

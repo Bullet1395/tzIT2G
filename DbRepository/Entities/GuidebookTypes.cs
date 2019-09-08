@@ -7,7 +7,7 @@ namespace Entities
     /// <summary>
     /// Справочник типов
     /// </summary>
-    public class Guidbook
+    public class GuidebookTypes
     {
         // ID
         public int id { get; set; }

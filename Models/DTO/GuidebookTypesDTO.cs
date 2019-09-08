@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DTO
 {
-    public class GuidbookDTO
+    public class GuidebookTypesDTO
     {
         public int id { get; set; }
         public string name { get; set; }

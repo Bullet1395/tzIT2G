@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace RestApiTz.ModelsView
 {
-    public class GuidbookView
+    public class GuidebookTypesView
     {
         public int id { get; set; }
         public string name { get; set; }

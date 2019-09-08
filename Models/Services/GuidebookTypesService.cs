@@ -10,22 +10,22 @@ using System.Text;
 
 namespace Models.Services
 {
-    public class GuidbookService : IGuidBookService
+    public class GuidebookTypesService : IGuideBookTypesService
     {
-        private IRepository<Guidbook> db;
+        private IRepository<GuidebookTypes> db;
 
-        public GuidbookService(IRepository<Guidbook> repository)
+        public GuidebookTypesService(IRepository<GuidebookTypes> repository)
         {
             db = repository;
         }
 
-        public void AddTypeGuidBook(GuidbookDTO newGuidbook)
+        public void AddTypeGuideBookType(GuidebookTypesDTO newGuidebookType)
         {            
             try
             {
-                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<GuidbookDTO, Guidbook>()).CreateMapper();
-                var mGuidbook = mapper.Map<GuidbookDTO, Guidbook>(newGuidbook);
-                db.Create(mGuidbook);
+                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<GuidebookTypesDTO, GuidebookTypes>()).CreateMapper();
+                var mGuidebookType = mapper.Map<GuidebookTypesDTO, GuidebookTypes>(newGuidebookType);
+                db.Create(mGuidebookType);
                 db.Save();
             }
             catch (Exception)
@@ -38,13 +38,13 @@ namespace Models.Services
             }
         }
 
-        public GuidbookDTO GetGuidBook(int id)
+        public GuidebookTypesDTO GetGuideBookType(int id)
         {
             try
             {
-                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Guidbook, GuidbookDTO>()).CreateMapper();
-                var mGuidbook = mapper.Map<Guidbook, GuidbookDTO>(db.Get(id));
-                return mGuidbook;
+                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<GuidebookTypes, GuidebookTypesDTO>()).CreateMapper();
+                var mGuidebookType = mapper.Map<GuidebookTypes, GuidebookTypesDTO>(db.Get(id));
+                return mGuidebookType;
             }
             catch (Exception)
             {
@@ -56,13 +56,13 @@ namespace Models.Services
             }
         }
 
-        public IEnumerable<GuidbookDTO> GetGuidBooks()
+        public IEnumerable<GuidebookTypesDTO> GetGuideBookTypes()
         {
             try
             {
-                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Guidbook, GuidbookDTO>()).CreateMapper();
-                var mGuidbookList = mapper.Map<IEnumerable<Guidbook>, List<GuidbookDTO>>(db.GetAll());
-                return mGuidbookList;
+                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<GuidebookTypes, GuidebookTypesDTO>()).CreateMapper();
+                var mGuidebookTypesList = mapper.Map<IEnumerable<GuidebookTypes>, List<GuidebookTypesDTO>>(db.GetAll());
+                return mGuidebookTypesList;
             }
             catch (Exception ex)
             {
@@ -74,7 +74,7 @@ namespace Models.Services
             }
         }
 
-        public void RemoveGuidBook(int id)
+        public void RemoveGuideBookType(int id)
         {
             try
             {
@@ -91,13 +91,13 @@ namespace Models.Services
             }
         }
 
-        public void UpdateGuidBook(GuidbookDTO newGuidBook)
+        public void UpdateGuideBookType(GuidebookTypesDTO newGuidBook)
         {
             try
             {
-                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<GuidbookDTO, Guidbook>()).CreateMapper();
-                var mGuidbook = mapper.Map<GuidbookDTO, Guidbook>(newGuidBook);
-                db.Update(mGuidbook);
+                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<GuidebookTypesDTO, GuidebookTypes>()).CreateMapper();
+                var mGuidebookType = mapper.Map<GuidebookTypesDTO, GuidebookTypes>(newGuidBook);
+                db.Update(mGuidebookType);
                 db.Save();
             }
             catch (Exception)
