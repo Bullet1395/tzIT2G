@@ -2,6 +2,7 @@
 using Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DbRepository.Repositories
@@ -20,7 +21,7 @@ namespace DbRepository.Repositories
             db.Add(obj);
         }
 
-        public IEnumerable<ObjectInventory> GetAll()
+        public IQueryable<ObjectInventory> GetAll()
         {
             return db.ObjectsInventory;
         }

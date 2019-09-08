@@ -34,7 +34,7 @@ namespace Models.BL
         /// </summary>
         /// <param name="filtres"></param>
         /// <returns></returns>
-        public IEnumerable<ObjectInventoryDTO> Filtering(Filter filtres, IEnumerable<ObjectInventoryDTO> objectsInventory)
+        public IEnumerable<ObjectInventoryDTO> Filtering(Filter filtres, IQueryable<ObjectInventoryDTO> objectsInventory)
         {
             return (from obj in objectsInventory
                                  where

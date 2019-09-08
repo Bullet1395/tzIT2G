@@ -2,6 +2,7 @@
 using Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DbRepository.Repositories
@@ -21,7 +22,7 @@ namespace DbRepository.Repositories
             db.Add(item);
         }
 
-        public IEnumerable<GuidebookTypes> GetAll()
+        public IQueryable<GuidebookTypes> GetAll()
         {
             return db.GuidebookTypes;
         }
