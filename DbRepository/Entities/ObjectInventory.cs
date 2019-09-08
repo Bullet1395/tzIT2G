@@ -19,7 +19,7 @@ namespace Entities
         public string Name { get; set; }
 
         // Количество
-        public int? Count { get; set; }
+        public int Count { get; set; }
 
         // Штрих-код
         public string Uniqcode { get; set; }
