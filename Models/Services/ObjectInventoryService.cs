@@ -62,49 +62,49 @@ namespace Models.Services
                 };
         }
 
-        public IEnumerable<ObjectInventoryDTO> GetObjects(int? id, Options configOpt)
+        public ObjectInventoryDTO GetObject(int id)
+        {
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ObjectInventory, ObjectInventoryDTO>()).CreateMapper();
+            var mObject = mapper.Map<ObjectInventory, ObjectInventoryDTO>(db.Get(Convert.ToInt32(id)));
+            return mObject;
+        }
+
+        public IEnumerable<ObjectInventoryDTO> GetObjects(Options configOpt)
         {
             try
             {
                 var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ObjectInventory, ObjectInventoryDTO>()).CreateMapper();
 
-                if (id != null)
+                var optionsFiltering = configOpt.OptionsFilter;
+                var optionsSorting = configOpt.OptionsSort;
+                var optionsPages = configOpt.OptionsPage;
+
+                var mObject = mapper.Map<IEnumerable<ObjectInventory>, List<ObjectInventoryDTO>>(
+                    (from obj in db.GetAll()
+                     where
+                        (optionsFiltering.Types != null ? optionsFiltering.Types.Contains(obj.IdType) : true) &&
+
+                        ((optionsFiltering.Names != null || optionsFiltering.Names != "") ? obj.Name.Contains(optionsFiltering.Names) : true) &&
+
+                        ((optionsFiltering.MinCount != null && optionsFiltering.MaxCount != null) ? obj.Count >= optionsFiltering.MinCount && obj.Count <= optionsFiltering.MaxCount :
+                            (optionsFiltering.MinCount != null && optionsFiltering.MaxCount == null) ? obj.Count >= optionsFiltering.MinCount :
+                                (optionsFiltering.MinCount == null && optionsFiltering.MaxCount != null) ? obj.Count <= optionsFiltering.MaxCount : true) &&
+
+                        (optionsFiltering.Uniqcode != null && optionsFiltering.Uniqcode != "" ? obj.Uniqcode == optionsFiltering.Uniqcode : true)
+                     select obj).ToList());
+
+                if (optionsSorting != null)
                 {
-                    var mObject = mapper.Map<ObjectInventory, ObjectInventoryDTO>(db.Get(Convert.ToInt32(id)));
-                    return new List<ObjectInventoryDTO>() { mObject };
+                    mObject = Sort.Sorting(optionsSorting, mObject).ToList();
                 }
-                else
+
+                if (optionsPages != null)
                 {
-                    var optionsFiltering = configOpt.OptionsFilter;
-                    var optionsSorting = configOpt.OptionsSort;
-                    var optionsPages = configOpt.OptionsPage;
-
-                    var mObject = mapper.Map<IEnumerable<ObjectInventory>, List<ObjectInventoryDTO>>(
-                        (from obj in db.GetAll()
-                         where
-                            (optionsFiltering.Types != null ? optionsFiltering.Types.Contains(obj.IdType) : true) &&
-
-                            ((optionsFiltering.Names != null || optionsFiltering.Names != "") ? obj.Name.Contains(optionsFiltering.Names) : true) &&
-
-                            ((optionsFiltering.MinCount != null && optionsFiltering.MaxCount != null) ? obj.Count >= optionsFiltering.MinCount && obj.Count <= optionsFiltering.MaxCount :
-                                (optionsFiltering.MinCount != null && optionsFiltering.MaxCount == null) ? obj.Count >= optionsFiltering.MinCount :
-                                    (optionsFiltering.MinCount == null && optionsFiltering.MaxCount != null) ? obj.Count <= optionsFiltering.MaxCount : true) &&
-
-                            (optionsFiltering.Uniqcode != null && optionsFiltering.Uniqcode != "" ? obj.Uniqcode == optionsFiltering.Uniqcode : true)
-                         select obj).ToList());
-
-                    if (optionsSorting != null)
-                    {
-                        mObject = Sort.Sorting(optionsSorting, mObject).ToList();
-                    }
-
-                    if (optionsPages != null)
-                    {
-                        mObject = Pages.GetPages(optionsPages, mObject).ToList();
-                    }
-
-                    return mObject;
+                    mObject = Pages.GetPages(optionsPages, mObject).ToList();
                 }
+
+                return mObject;
+
             }
             catch (Exception)
             {

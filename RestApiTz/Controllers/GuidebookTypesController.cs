@@ -27,13 +27,15 @@ namespace RestApiTz.Controllers
         }
 
         [HttpPost]
-        public void Post([FromBody] JToken value)
+        public IActionResult Post([FromBody] JToken value)
         {
             var newType = JsonConvert.DeserializeObject<GuidebookTypesView>(value.ToString());
 
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<GuidebookTypesView, GuidebookTypesDTO>()).CreateMapper();
             var mGuidebookType = mapper.Map<GuidebookTypesView, GuidebookTypesDTO>(newType);
             guideBookTypesService.AddTypeGuideBookType(mGuidebookType);
+
+            return Ok();
         }
 
         [HttpGet]
@@ -46,16 +48,23 @@ namespace RestApiTz.Controllers
         }
 
         [HttpGet("{id}", Name = "GetGuidbook")]
-        public JObject Get(int id)
+        public IActionResult Get(int id)
         {
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<GuidebookTypesDTO, GuidebookTypesView>()).CreateMapper();
             var mGuidebookType = mapper.Map<GuidebookTypesDTO, GuidebookTypesView>(guideBookTypesService.GetGuideBookType(id));
 
-            return JObject.Parse(JsonConvert.SerializeObject(mGuidebookType));
+            if (mGuidebookType != null)
+            {
+                return new ObjectResult(JObject.Parse(JsonConvert.SerializeObject(mGuidebookType)));
+            }
+            else
+            {
+                return NotFound();
+            }            
         }
 
         [HttpPut]
-        public void Put([FromBody] JToken value)
+        public IActionResult Put([FromBody] JToken value)
         {
             var newType = JsonConvert.DeserializeObject<GuidebookTypesView>(value.ToString());
 
@@ -63,12 +72,24 @@ namespace RestApiTz.Controllers
             var mGuidebookType = mapper.Map<GuidebookTypesView, GuidebookTypesDTO>(newType);
 
             guideBookTypesService.UpdateGuideBookType(mGuidebookType);
+
+            return Ok(mGuidebookType);
         }
 
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
-            guideBookTypesService.RemoveGuideBookType(id);
+            if (guideBookTypesService.GetGuideBookType(id) != null)
+            {
+                guideBookTypesService.RemoveGuideBookType(id);
+
+                return NoContent();
+            } else
+            {
+                return NotFound();
+            }
+
+           
         }
     }
 }

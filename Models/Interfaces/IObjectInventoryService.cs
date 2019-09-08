@@ -23,13 +23,18 @@ namespace Models.Interfaces
         Options GetExampleOptions();
 
         /// <summary>
-        /// Получить отфильтрованный/отсротированный/постраничный список объектов инвентаризации 
-        /// или объект по его ID(если указан)
+        /// Получить объект по его ID
         /// </summary>
-        /// <param name="id">ID объекта для получения</param>
+        /// <param name="id">ID объекта для поиска</param>
+        /// <returns></returns>
+        ObjectInventoryDTO GetObject(int id);
+
+        /// <summary>
+        /// Получить отфильтрованный/отсротированный/постраничный список объектов инвентаризации
+        /// </summary>
         /// <param name="configOpt">КОнфигурация настроек для фильтрации/сортировки/постраничного вывода</param>
         /// <returns></returns>
-        IEnumerable<ObjectInventoryDTO> GetObjects(int? id, Options configOpt);
+        IEnumerable<ObjectInventoryDTO> GetObjects(Options configOpt);
 
         /// <summary>
         /// Оббновление объекта инвентаризации
