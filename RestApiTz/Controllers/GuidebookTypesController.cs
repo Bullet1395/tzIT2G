@@ -20,18 +20,19 @@ namespace RestApiTz.Controllers
     public class GuidebookTypesController : ControllerBase
     {
         private readonly IGuideBookTypesService guideBookTypesService;
+        private readonly IMapper mapper;
 
-        public GuidebookTypesController(IGuideBookTypesService service)
+        public GuidebookTypesController(IGuideBookTypesService service, IMapper mapperConf)
         {
             guideBookTypesService = service;
+            mapper = mapperConf;
         }
 
         [HttpPost]
         public IActionResult Post([FromBody] JToken value)
         {
             var newType = JsonConvert.DeserializeObject<GuidebookTypesView>(value.ToString());
-
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<GuidebookTypesView, GuidebookTypesDTO>()).CreateMapper();
+                        
             var mGuidebookType = mapper.Map<GuidebookTypesView, GuidebookTypesDTO>(newType);
             guideBookTypesService.AddTypeGuideBookType(mGuidebookType);
 
@@ -41,7 +42,6 @@ namespace RestApiTz.Controllers
         [HttpGet]
         public JArray Get()
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<GuidebookTypesDTO, GuidebookTypesView>()).CreateMapper();
             var mGuidebookTypesList = mapper.Map<IEnumerable<GuidebookTypesDTO>, List<GuidebookTypesView>>(guideBookTypesService.GetGuideBookTypes());
 
             return JArray.Parse(JsonConvert.SerializeObject(mGuidebookTypesList));
@@ -50,7 +50,6 @@ namespace RestApiTz.Controllers
         [HttpGet("{id}", Name = "GetGuidbook")]
         public IActionResult Get(int id)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<GuidebookTypesDTO, GuidebookTypesView>()).CreateMapper();
             var mGuidebookType = mapper.Map<GuidebookTypesDTO, GuidebookTypesView>(guideBookTypesService.GetGuideBookType(id));
 
             if (mGuidebookType != null)
@@ -68,7 +67,6 @@ namespace RestApiTz.Controllers
         {
             var newType = JsonConvert.DeserializeObject<GuidebookTypesView>(value.ToString());
 
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<GuidebookTypesView, GuidebookTypesDTO>()).CreateMapper();
             var mGuidebookType = mapper.Map<GuidebookTypesView, GuidebookTypesDTO>(newType);
 
             guideBookTypesService.UpdateGuideBookType(mGuidebookType);

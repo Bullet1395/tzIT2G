@@ -21,7 +21,12 @@ namespace DbRepository.Repositories
             db.Add(obj);
         }
 
-        public IQueryable<ObjectInventory> GetAll()
+        public IQueryable<ObjectInventory> GetAllQuery()
+        {
+            return db.ObjectsInventory.AsQueryable();
+        }
+
+        public IEnumerable<ObjectInventory> GetAll()
         {
             return db.ObjectsInventory;
         }

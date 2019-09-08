@@ -22,7 +22,12 @@ namespace DbRepository.Repositories
             db.Add(item);
         }
 
-        public IQueryable<GuidebookTypes> GetAll()
+        public IQueryable<GuidebookTypes> GetAllQuery()
+        {
+            return db.GuidebookTypes.AsQueryable();
+        }
+
+        public IEnumerable<GuidebookTypes> GetAll()
         {
             return db.GuidebookTypes;
         }

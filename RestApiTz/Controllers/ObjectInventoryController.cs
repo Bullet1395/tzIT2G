@@ -20,10 +20,12 @@ namespace RestApiTz.Controllers
     public class ObjectInventoryController : ControllerBase
     {
         private readonly IObjectInventoryService objectService;
+        private readonly IMapper mapper;
 
-        public ObjectInventoryController(IObjectInventoryService service)
+        public ObjectInventoryController(IObjectInventoryService service, IMapper mapperConf)
         {
             objectService = service;
+            mapper = mapperConf;
         }
 
         [HttpPost]
@@ -31,7 +33,6 @@ namespace RestApiTz.Controllers
         {
             var newObj = JsonConvert.DeserializeObject<ObjectInventoryView>(value.ToString());
 
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ObjectInventoryView, ObjectInventoryDTO>()).CreateMapper();
             var mObject = mapper.Map<ObjectInventoryView, ObjectInventoryDTO>(newObj);
             objectService.AddObjectInventory(mObject);
 
@@ -69,7 +70,6 @@ namespace RestApiTz.Controllers
         {
             var newType = JsonConvert.DeserializeObject<ObjectInventoryView>(value.ToString());
 
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ObjectInventoryView, ObjectInventoryDTO>()).CreateMapper();
             var mObject = mapper.Map<ObjectInventoryView, ObjectInventoryDTO>(newType);
 
             objectService.UpdateObject(mObject);

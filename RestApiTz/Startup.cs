@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using DbRepository;
 using DbRepository.Interfaces;
 using DbRepository.Repositories;
@@ -15,8 +16,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Models.DTO;
 using Models.Interfaces;
 using Models.Services;
+using RestApiTz.ModelsView;
 
 namespace RestApiTz
 {
@@ -41,6 +44,14 @@ namespace RestApiTz
 
             services.AddScoped<IRepository<ObjectInventory>, ObjectInventoryRepository>();
             services.AddScoped<IObjectInventoryService, ObjectInventoryService>();
+
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingDTO());
+                mc.AddProfile(new MappingView());
+            });
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

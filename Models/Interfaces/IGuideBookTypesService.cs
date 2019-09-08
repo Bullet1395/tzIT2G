@@ -19,6 +19,8 @@ namespace Models.Interfaces
         /// <returns></returns>
         IEnumerable<GuidebookTypesDTO> GetGuideBookTypes();
 
+        
+
         /// <summary>
         /// Получить тип из справочника по его ID
         /// </summary>

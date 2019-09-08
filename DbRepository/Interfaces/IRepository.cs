@@ -10,10 +10,16 @@ namespace DbRepository.Interfaces
         where T : class
     {
         /// <summary>
+        /// Получение всех объектов(IQueryable)
+        /// </summary>
+        /// <returns></returns>
+        IQueryable<T> GetAllQuery();
+
+        /// <summary>
         /// Получение всех объектов
         /// </summary>
         /// <returns></returns>
-        IQueryable<T> GetAll(); 
+        IEnumerable<T> GetAll();
         
         /// <summary>
         /// Получение объекта по его ID

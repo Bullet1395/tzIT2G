@@ -15,17 +15,20 @@ namespace Models.Services
     public class ObjectInventoryService : IObjectInventoryService
     {
         private readonly IRepository<ObjectInventory> db;
+        private readonly IMapper mapper;
 
-        public ObjectInventoryService(IRepository<ObjectInventory> repository)
+        public ObjectInventoryService(IRepository<ObjectInventory> repository, IMapper mapperConf)
         {
             db = repository;
+            mapper = mapperConf;
         }
+
+        public IMapper MapperConf { get; }
 
         public void AddObjectInventory(ObjectInventoryDTO newObject)
         {
             try
             {
-                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ObjectInventoryDTO, ObjectInventory>()).CreateMapper();
                 var mObject = mapper.Map<ObjectInventoryDTO, ObjectInventory>(newObject);
                 db.Create(mObject);
                 db.Save();
@@ -64,7 +67,6 @@ namespace Models.Services
 
         public ObjectInventoryDTO GetObject(int id)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ObjectInventory, ObjectInventoryDTO>()).CreateMapper();
             var mObject = mapper.Map<ObjectInventory, ObjectInventoryDTO>(db.Get(Convert.ToInt32(id)));
             return mObject;
         }
@@ -73,14 +75,12 @@ namespace Models.Services
         {
             try
             {
-                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ObjectInventory, ObjectInventoryDTO>()).CreateMapper();
-
                 var optionsFiltering = configOpt.OptionsFilter;
                 var optionsSorting = configOpt.OptionsSort;
                 var optionsPages = configOpt.OptionsPage;
 
                 var mObject = mapper.Map<IEnumerable<ObjectInventory>, List<ObjectInventoryDTO>>(
-                    (from obj in db.GetAll()
+                    (from obj in db.GetAllQuery()
                      where
                         (optionsFiltering.Types != null ? optionsFiltering.Types.Contains(obj.IdType) : true) &&
 
@@ -129,7 +129,6 @@ namespace Models.Services
         {
             try
             {
-                var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ObjectInventoryDTO, ObjectInventory>()).CreateMapper();
                 var mObject = mapper.Map<ObjectInventoryDTO, ObjectInventory>(newObject);
                 db.Update(mObject);
                 db.Save();
