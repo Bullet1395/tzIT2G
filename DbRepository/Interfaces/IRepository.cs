@@ -5,7 +5,7 @@ using System.Text;
 namespace DbRepository.Interfaces
 {
 
-    public interface IRepository<T> : IDisposable
+    public interface IRepository<T>
         where T : class
     {
         /// <summary>

@@ -34,10 +34,6 @@ namespace Models.Services
             {
                 throw new NotImplementedException();
             }
-            finally
-            {
-                db.Dispose();
-            }
         }
 
         public Options GetExampleOptions()
@@ -114,10 +110,6 @@ namespace Models.Services
             {
                 throw new NotImplementedException();
             }
-            finally
-            {
-                db.Dispose();
-            }
         }
 
         public void RemoveObject(int id)
@@ -130,10 +122,6 @@ namespace Models.Services
             catch (Exception)
             {
                 throw new NotImplementedException();
-            }
-            finally
-            {
-                db.Dispose();
             }
         }
 
@@ -149,10 +137,6 @@ namespace Models.Services
             catch (Exception)
             {
                 throw new NotImplementedException();
-            }
-            finally
-            {
-                db.Dispose();
             }
         }
     }

@@ -12,7 +12,7 @@ namespace Models.Services
 {
     public class GuidebookTypesService : IGuideBookTypesService
     {
-        private readonly IRepository<GuidebookTypes> db;
+        private IRepository<GuidebookTypes> db;
 
         public GuidebookTypesService(IRepository<GuidebookTypes> repository)
         {
@@ -32,10 +32,6 @@ namespace Models.Services
             {
                 throw new NotImplementedException();
             }
-            finally
-            {                
-                db.Dispose();
-            }
         }
 
         public GuidebookTypesDTO GetGuideBookType(int id)
@@ -49,10 +45,6 @@ namespace Models.Services
             catch (Exception)
             {
                 throw new NotImplementedException();
-            }
-            finally
-            {
-                db.Dispose();
             }
         }
 
@@ -68,10 +60,6 @@ namespace Models.Services
             {
                 return null;
             }
-            finally
-            {
-                db.Dispose();
-            }
         }
 
         public void RemoveGuideBookType(int id)
@@ -84,10 +72,6 @@ namespace Models.Services
             catch (Exception)
             {
                 throw new NotImplementedException();
-            }
-            finally
-            {
-                db.Dispose();
             }
         }
 
@@ -103,10 +87,6 @@ namespace Models.Services
             catch (Exception)
             {
                 throw new NotImplementedException();
-            }
-            finally
-            {
-                db.Dispose();
             }
         }
     }

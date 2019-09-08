@@ -46,10 +46,5 @@ namespace DbRepository.Repositories
         {
             db.SaveChanges();
         }
-
-        public void Dispose()
-        {
-            db.Dispose();
-        }
     }
 }
