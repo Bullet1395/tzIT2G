@@ -7,10 +7,10 @@ namespace RestApiTz.ModelsView
 {
     public class ObjectInventoryView
     {
-        public int id { get; set; }
-        public int idType { get; set; }
-        public string name { get; set; }
-        public int count { get; set; }
-        public string uniqcode { get; set; }
+        public int Id { get; set; }
+        public int IdType { get; set; }
+        public string Name { get; set; }
+        public int Count { get; set; }
+        public string Uniqcode { get; set; }
     }
 }

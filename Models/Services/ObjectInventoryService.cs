@@ -14,7 +14,7 @@ namespace Models.Services
 {
     public class ObjectInventoryService : IObjectInventoryService
     {
-        private IRepository<ObjectInventory> db;
+        private readonly IRepository<ObjectInventory> db;
 
         public ObjectInventoryService(IRepository<ObjectInventory> repository)
         {
@@ -45,23 +45,23 @@ namespace Models.Services
             return
                 new Options()
                 {
-                    optionsFilter = new Filter()
+                    OptionsFilter = new Filter()
                     {
-                        types = new List<int>() { 1, 2, 3 },
-                        names = "имя",
-                        minCount = 0,
-                        maxCount = 3,
-                        uniqcode = ""
+                        Types = new List<int>() { 1, 2, 3 },
+                        Names = "имя",
+                        MinCount = 0,
+                        MaxCount = 3,
+                        Uniqcode = ""
                     },
-                    optionsSort = new Sort[]
+                    OptionsSort = new Sort[]
                     {
-                        new Sort() { property = "id", direction = "Asc" },
-                        new Sort() { property = "name", direction = "Desc" },
+                        new Sort() { Property = "id", Direction = "Asc" },
+                        new Sort() { Property = "name", Direction = "Desc" },
                     },
-                    optionsPage = new Pages()
+                    OptionsPage = new Pages()
                     {
-                        numberPage = 1,
-                        countOnPage = 2
+                        NumberPage = 1,
+                        CountOnPage = 2
                     }
                 };
         }
@@ -79,22 +79,22 @@ namespace Models.Services
                 }
                 else
                 {
-                    var optionsFiltering = configOpt.optionsFilter;
-                    var optionsSorting = configOpt.optionsSort;
-                    var optionsPages = configOpt.optionsPage;
+                    var optionsFiltering = configOpt.OptionsFilter;
+                    var optionsSorting = configOpt.OptionsSort;
+                    var optionsPages = configOpt.OptionsPage;
 
                     var mObject = mapper.Map<IEnumerable<ObjectInventory>, List<ObjectInventoryDTO>>(
                         (from obj in db.GetAll()
                          where
-                            (optionsFiltering.types != null ? optionsFiltering.types.Contains(obj.idType) : true) &&
+                            (optionsFiltering.Types != null ? optionsFiltering.Types.Contains(obj.IdType) : true) &&
 
-                            ((optionsFiltering.names != null || optionsFiltering.names != "") ? obj.name.Contains(optionsFiltering.names) : true) &&
+                            ((optionsFiltering.Names != null || optionsFiltering.Names != "") ? obj.Name.Contains(optionsFiltering.Names) : true) &&
 
-                            ((optionsFiltering.minCount != null && optionsFiltering.maxCount != null) ? obj.count >= optionsFiltering.minCount && obj.count <= optionsFiltering.maxCount :
-                                (optionsFiltering.minCount != null && optionsFiltering.maxCount == null) ? obj.count >= optionsFiltering.minCount :
-                                    (optionsFiltering.minCount == null && optionsFiltering.maxCount != null) ? obj.count <= optionsFiltering.maxCount : true) &&
+                            ((optionsFiltering.MinCount != null && optionsFiltering.MaxCount != null) ? obj.Count >= optionsFiltering.MinCount && obj.Count <= optionsFiltering.MaxCount :
+                                (optionsFiltering.MinCount != null && optionsFiltering.MaxCount == null) ? obj.Count >= optionsFiltering.MinCount :
+                                    (optionsFiltering.MinCount == null && optionsFiltering.MaxCount != null) ? obj.Count <= optionsFiltering.MaxCount : true) &&
 
-                            (optionsFiltering.uniqcode != null && optionsFiltering.uniqcode != "" ? obj.uniqcode == optionsFiltering.uniqcode : true)
+                            (optionsFiltering.Uniqcode != null && optionsFiltering.Uniqcode != "" ? obj.Uniqcode == optionsFiltering.Uniqcode : true)
                          select obj).ToList());
 
                     if (optionsSorting != null)

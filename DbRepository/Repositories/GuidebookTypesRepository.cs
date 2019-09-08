@@ -9,7 +9,7 @@ namespace DbRepository.Repositories
 
     public class GuidebookTypesRepository : IRepository<GuidebookTypes>
     {
-       private Context db;
+       private readonly Context db;
 
        public GuidebookTypesRepository(Context context)
         {

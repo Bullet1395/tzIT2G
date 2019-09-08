@@ -12,7 +12,7 @@ namespace Models.Services
 {
     public class GuidebookTypesService : IGuideBookTypesService
     {
-        private IRepository<GuidebookTypes> db;
+        private readonly IRepository<GuidebookTypes> db;
 
         public GuidebookTypesService(IRepository<GuidebookTypes> repository)
         {

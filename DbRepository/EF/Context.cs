@@ -28,18 +28,18 @@ namespace DbRepository
             {
                 entity.ToTable("objectsinventory");
 
-                entity.Property(e => e.id).HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.count).HasColumnName("count");
+                entity.Property(e => e.Count).HasColumnName("count");
 
-                entity.Property(e => e.idType).HasColumnName("idtype");
+                entity.Property(e => e.IdType).HasColumnName("idtype");
 
-                entity.Property(e => e.name)
+                entity.Property(e => e.Name)
                     .IsRequired()
                     .HasColumnName("name")
                     .HasMaxLength(512);
 
-                entity.Property(e => e.uniqcode)
+                entity.Property(e => e.Uniqcode)
                     .HasColumnName("uniqcode")
                     .HasMaxLength(512);
             });
@@ -48,9 +48,9 @@ namespace DbRepository
             {
                 entity.ToTable("typesobject");
 
-                entity.Property(e => e.id).HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.name)
+                entity.Property(e => e.Name)
                     .IsRequired()
                     .HasColumnName("name")
                     .HasMaxLength(256);

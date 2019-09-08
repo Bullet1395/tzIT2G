@@ -10,9 +10,9 @@ namespace Entities
     public class GuidebookTypes
     {
         // ID
-        public int id { get; set; }
+        public int Id { get; set; }
 
         // Название типа
-        public string name { get; set; }
+        public string Name { get; set; }
     }
 }

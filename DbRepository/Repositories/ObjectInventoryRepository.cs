@@ -8,7 +8,7 @@ namespace DbRepository.Repositories
 {
     public class ObjectInventoryRepository : IRepository<ObjectInventory>
     {
-        private Context db;
+        private readonly Context db;
 
         public ObjectInventoryRepository(Context context)
         {

@@ -10,19 +10,19 @@ namespace Models.BL
 
     public class Filter
     {
-        public List<int> types { get; set; }
-        public string names { get; set; }
-        public int? minCount { get; set; } 
-        public int? maxCount { get; set; }
-        public string uniqcode { get; set; }
+        public List<int> Types { get; set; }
+        public string Names { get; set; }
+        public int? MinCount { get; set; } 
+        public int? MaxCount { get; set; }
+        public string Uniqcode { get; set; }
 
         public Filter(List<int> types, string names, int? minCount, int? maxCount, string uniqcode)
         {
-            this.types = types;
-            this.names = names;
-            this.minCount = minCount;
-            this.maxCount = maxCount;
-            this.uniqcode = this.uniqcode;
+            this.Types = types;
+            this.Names = names;
+            this.MinCount = minCount;
+            this.MaxCount = maxCount;
+            this.Uniqcode = this.Uniqcode;
         }
 
         public Filter()
@@ -38,12 +38,12 @@ namespace Models.BL
         {
             return (from obj in objectsInventory
                                  where
-                                     filtres.types != null ? filtres.types.Contains(obj.idType) : true &&
-                                     (filtres.names != null && filtres.names != "") ? obj.name.Contains(filtres.names) : true &&
-                                     ((filtres.minCount != null && filtres.maxCount != null) ? obj.count >= filtres.minCount && obj.count <= filtres.maxCount :
-                                        (filtres.minCount != null && filtres.maxCount == null) ? obj.count >= filtres.minCount :
-                                            (filtres.minCount == null && filtres.maxCount != null) ? obj.count <= filtres.maxCount : true) &&
-                                    filtres.uniqcode != null && filtres.uniqcode != "" ? obj.uniqcode == filtres.uniqcode : true
+                                     filtres.Types != null ? filtres.Types.Contains(obj.IdType) : true &&
+                                     (filtres.Names != null && filtres.Names != "") ? obj.Name.Contains(filtres.Names) : true &&
+                                     ((filtres.MinCount != null && filtres.MaxCount != null) ? obj.Count >= filtres.MinCount && obj.Count <= filtres.MaxCount :
+                                        (filtres.MinCount != null && filtres.MaxCount == null) ? obj.Count >= filtres.MinCount :
+                                            (filtres.MinCount == null && filtres.MaxCount != null) ? obj.Count <= filtres.MaxCount : true) &&
+                                    filtres.Uniqcode != null && filtres.Uniqcode != "" ? obj.Uniqcode == filtres.Uniqcode : true
                                  select obj).ToList();
         }
     }

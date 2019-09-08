@@ -9,13 +9,13 @@ namespace Models.BL
 {    
     public class Sort
     {
-        public string property { get; set; }
-        public string direction { get; set; }
+        public string Property { get; set; }
+        public string Direction { get; set; }
 
         public Sort(string property, string direction)
         {
-            this.property = property;
-            this.direction = direction;
+            this.Property = property;
+            this.Direction = direction;
         }
 
         public Sort()
@@ -34,17 +34,17 @@ namespace Models.BL
 
             foreach (var s in sort)
             {
-                Func<ObjectInventoryDTO, IComparable> keySelector = GetKeySelector<ObjectInventoryDTO>(s.property);
+                Func<ObjectInventoryDTO, IComparable> keySelector = GetKeySelector<ObjectInventoryDTO>(s.Property);
 
                 if (temp == null)
                 {
-                    temp = s.direction == "Asc" ?
+                    temp = s.Direction == "Asc" ?
                             listForSort.OrderBy(keySelector) :
                             listForSort.OrderByDescending(keySelector);
                 }
                 else
                 {
-                    temp = s.direction == "Asc" ?
+                    temp = s.Direction == "Asc" ?
                             temp.ThenBy(keySelector) :
                             temp.ThenByDescending(keySelector);
                 }

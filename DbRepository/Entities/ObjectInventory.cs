@@ -10,18 +10,18 @@ namespace Entities
     public class ObjectInventory
     {
         // ID
-        public int id { get; set; }
+        public int Id { get; set; }
 
         // ID типа из справочника типов(Guidbooks
-        public int idType { get; set; }
+        public int IdType { get; set; }
 
         // Наименование
-        public string name { get; set; }
+        public string Name { get; set; }
 
         // Количество
-        public int? count { get; set; }
+        public int? Count { get; set; }
 
         // Штрих-код
-        public string uniqcode { get; set; }
+        public string Uniqcode { get; set; }
     }
 }
