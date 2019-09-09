@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace DbRepository.Repositories
 {
@@ -16,9 +17,9 @@ namespace DbRepository.Repositories
             this.db = context;
         }
 
-        public void Create(ObjectInventory obj)
+        public async void Create(ObjectInventory obj)
         {
-            db.Add(obj);
+            await Task.Run(() => db.Add(obj));
         }
 
         public IQueryable<ObjectInventory> GetAllQuery()
@@ -26,31 +27,38 @@ namespace DbRepository.Repositories
             return db.ObjectsInventory.AsQueryable();
         }
 
-        public IEnumerable<ObjectInventory> GetAll()
+        public async Task<IEnumerable<ObjectInventory>> GetAll()
         {
-            return db.ObjectsInventory;
+            return await Task.Run(() => db.ObjectsInventory);
         }
 
-        public ObjectInventory Get(int id)
+        public async Task<ObjectInventory> Get(int id)
         {
-            return db.ObjectsInventory.Find(id);
+            return await Task.Run(() => db.ObjectsInventory.Find(id));
         }
 
-        public void Update(ObjectInventory obj)
+        public async void Update(ObjectInventory obj)
         {
-            db.ObjectsInventory.Update(obj);
-            db.Entry(obj).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            await Task.Run(() =>
+            {
+                db.ObjectsInventory.Update(obj);
+                db.Entry(obj).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            });            
         }
 
-        public void Delete(int id)
+        public async void Delete(int id)
         {
-            var guidBookForDelete = db.ObjectsInventory.Find(id);
-            db.Remove(guidBookForDelete);
+            await Task.Run(() =>
+            {
+                var guidBookForDelete = db.ObjectsInventory.Find(id);
+                db.Remove(guidBookForDelete);
+            });
+            
         }
 
-        public void Save()
+        public async void Save()
         {
-            db.SaveChanges();
+            await Task.Run(() => db.SaveChanges());
         }
     }
 }

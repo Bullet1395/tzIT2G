@@ -6,3 +6,4 @@ C:\Users\Bullet1395\source\repos\RestApiTz\DbRepository\bin\Debug\netstandard2.0
 C:\Users\Bullet1395\source\repos\RestApiTz\DbRepository\bin\Debug\netstandard2.0\DbRepository.pdb
 C:\Users\Bullet1395\source\repos\RestApiTz\DbRepository\obj\Debug\netstandard2.0\DbRepository.dll
 C:\Users\Bullet1395\source\repos\RestApiTz\DbRepository\obj\Debug\netstandard2.0\DbRepository.pdb
+C:\Users\Bullet1395\source\repos\RestApiTz\DbRepository\obj\Debug\netstandard2.0\DbRepository.csprojAssemblyReference.cache

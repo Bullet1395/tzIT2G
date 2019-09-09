@@ -24,6 +24,18 @@ namespace DbRepository
         {
             modelBuilder.HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
 
+            modelBuilder.Entity<GuidebookTypes>(entity =>
+            {
+                entity.ToTable("typesobject");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasColumnName("name")
+                    .HasMaxLength(256);
+            });
+
             modelBuilder.Entity<ObjectInventory>(entity =>
             {
                 entity.ToTable("objectsinventory");
@@ -42,19 +54,7 @@ namespace DbRepository
                 entity.Property(e => e.Uniqcode)
                     .HasColumnName("uniqcode")
                     .HasMaxLength(512);
-            });
-
-            modelBuilder.Entity<GuidebookTypes>(entity =>
-            {
-                entity.ToTable("typesobject");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasColumnName("name")
-                    .HasMaxLength(256);
-            });
+            });               
         }
     }
 }

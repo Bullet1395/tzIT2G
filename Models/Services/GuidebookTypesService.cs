@@ -7,7 +7,9 @@ using Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Models.Services
 {
@@ -23,70 +25,35 @@ namespace Models.Services
         }
 
         public void AddTypeGuideBookType(GuidebookTypesDTO newGuidebookType)
-        {            
-            try
-            {
-                var mGuidebookType = mapper.Map<GuidebookTypesDTO, GuidebookTypes>(newGuidebookType);
-                db.Create(mGuidebookType);
-                db.Save();
-            }
-            catch (Exception)
-            {
-                throw new NotImplementedException();
-            }
+        {
+            var mGuidebookType = mapper.Map<GuidebookTypesDTO, GuidebookTypes>(newGuidebookType);
+            db.Create(mGuidebookType);
+            db.Save();
         }
 
         public GuidebookTypesDTO GetGuideBookType(int id)
         {
-            try
-            {
-                var mGuidebookType = mapper.Map<GuidebookTypes, GuidebookTypesDTO>(db.Get(id));
-                return mGuidebookType;
-            }
-            catch (Exception)
-            {
-                throw new NotImplementedException();
-            }
+            var mGuidebookType = mapper.Map<GuidebookTypes, GuidebookTypesDTO>(db.Get(id).Result);
+            return mGuidebookType;
         }
 
         public IEnumerable<GuidebookTypesDTO> GetGuideBookTypes()
         {
-            try
-            {
-                var mGuidebookTypesList = mapper.Map<IEnumerable<GuidebookTypes>, List<GuidebookTypesDTO>>(db.GetAll());
-                return mGuidebookTypesList;
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
+            var mGuidebookTypesList = mapper.Map<IEnumerable<GuidebookTypes>, List<GuidebookTypesDTO>>(db.GetAll().Result);
+            return mGuidebookTypesList;
         }
 
         public void RemoveGuideBookType(int id)
         {
-            try
-            {
-                db.Delete(id);
-                db.Save();
-            }
-            catch (Exception)
-            {
-                throw new NotImplementedException();
-            }
+            db.Delete(id);
+            db.Save();
         }
 
         public void UpdateGuideBookType(GuidebookTypesDTO newGuidBook)
         {
-            try
-            {
-                var mGuidebookType = mapper.Map<GuidebookTypesDTO, GuidebookTypes>(newGuidBook);
-                db.Update(mGuidebookType);
-                db.Save();
-            }
-            catch (Exception)
-            {
-                throw new NotImplementedException();
-            }
+            var mGuidebookType = mapper.Map<GuidebookTypesDTO, GuidebookTypes>(newGuidBook);
+            db.Update(mGuidebookType);
+            db.Save();
         }
     }
 }

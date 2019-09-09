@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace DbRepository.Interfaces
 {
@@ -19,14 +20,14 @@ namespace DbRepository.Interfaces
         /// Получение всех объектов
         /// </summary>
         /// <returns></returns>
-        IEnumerable<T> GetAll();
-        
+        Task<IEnumerable<T>> GetAll();
+
         /// <summary>
         /// Получение объекта по его ID
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        T Get(int id); 
+        Task<T> Get(int id); 
         
         /// <summary>
         /// Создать объект

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace DbRepository.Repositories
 {
@@ -17,9 +18,9 @@ namespace DbRepository.Repositories
             this.db = context;
         }
 
-        public void Create(GuidebookTypes item)
+        public async void Create(GuidebookTypes item)
         {
-            db.Add(item);
+            await Task.Run(() => db.Add(item));
         }
 
         public IQueryable<GuidebookTypes> GetAllQuery()
@@ -27,31 +28,34 @@ namespace DbRepository.Repositories
             return db.GuidebookTypes.AsQueryable();
         }
 
-        public IEnumerable<GuidebookTypes> GetAll()
+        public async Task<IEnumerable<GuidebookTypes>> GetAll()
         {
-            return db.GuidebookTypes;
+            return await Task.Run(() => db.GuidebookTypes);
         }
 
-        public GuidebookTypes Get(int id)
+        public async Task<GuidebookTypes> Get(int id)
         {
-            return db.GuidebookTypes.Find(id);
+            return await Task.Run(() => db.GuidebookTypes.Find(id));           
         }
 
-        public void Update(GuidebookTypes guideBook)
-        {  
-            db.GuidebookTypes.Update(guideBook);
-            db.Entry(guideBook).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+        public async void Update(GuidebookTypes guideBook)
+        {
+            await Task.Run(() => {
+                db.GuidebookTypes.Update(guideBook);
+                db.Entry(guideBook).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                });            
         }
 
-        public void Delete(int id)
-        {
-            var guideBookTypeForDelete = db.GuidebookTypes.Find(id);
-            db.Remove(guideBookTypeForDelete);
+        public async void Delete(int id)
+        {           
+            await Task.Run(() => {
+                var guideBookTypeForDelete = db.GuidebookTypes.Find(id);
+                db.Remove(guideBookTypeForDelete); });
         }       
 
-        public void Save()
+        public async void Save()
         {
-            db.SaveChanges();
+            await Task.Run(() => db.SaveChanges());
         }
     }
 }
