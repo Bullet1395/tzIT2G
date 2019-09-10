@@ -7,7 +7,7 @@ namespace DTO
     public class ObjectInventoryDTO
     {
         public int Id { get; set; }
-        public int IdType { get; set; }
+        public GuidebookTypesDTO GuidebookType { get; set; }
         public string Name { get; set; }
         public int Count { get; set; }
         public string Uniqcode { get; set; }

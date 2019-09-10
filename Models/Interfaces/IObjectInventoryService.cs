@@ -3,6 +3,7 @@ using Models.BL;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Models.Interfaces
 {
@@ -11,7 +12,7 @@ namespace Models.Interfaces
         /// <summary>
         /// Добавить объект инвентаризации
         /// </summary
-        void AddObjectInventory(ObjectInventoryDTO newObject);
+        Task AddObjectInventory(ObjectInventoryDTO newObject);
 
         /// <summary>
         /// Получить пример конфигурации для фильтрации/сортировки/постраничного вывода списка
@@ -27,7 +28,7 @@ namespace Models.Interfaces
         /// </summary>
         /// <param name="id">ID объекта для поиска</param>
         /// <returns></returns>
-        ObjectInventoryDTO GetObject(int id);
+        Task<ObjectInventoryDTO> GetObject(int id);
 
         /// <summary>
         /// Получить отфильтрованный/отсротированный/постраничный список объектов инвентаризации

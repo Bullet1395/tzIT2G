@@ -16,21 +16,27 @@ namespace Models.Services
     public class ObjectInventoryService : IObjectInventoryService
     {
         private readonly IRepository<ObjectInventory> db;
+        private readonly IRepository<GuidebookTypes> dbGuideBooks;
         private readonly IMapper mapper;
 
-        public ObjectInventoryService(IRepository<ObjectInventory> repository, IMapper mapperConf)
+        public ObjectInventoryService(IRepository<ObjectInventory> repository, IRepository<GuidebookTypes> repositoryGuideBooks, IMapper mapperConf)
         {
             db = repository;
+            dbGuideBooks = repositoryGuideBooks;
             mapper = mapperConf;
         }
 
         public IMapper MapperConf { get; }
 
-        public void AddObjectInventory(ObjectInventoryDTO newObject)
+        public async Task AddObjectInventory(ObjectInventoryDTO newObject)
         {
-            var mObject = mapper.Map<ObjectInventoryDTO, ObjectInventory>(newObject);
-            db.Create(mObject);
-            db.Save();
+            if (await dbGuideBooks.Get(newObject.GuidebookType.Id) != null)
+            {
+                var mObject = mapper.Map<ObjectInventoryDTO, ObjectInventory>(newObject);
+                mObject.GuidebookType = await dbGuideBooks.Get(newObject.GuidebookType.Id);
+                await db.Create(mObject);
+                await db.Save();
+            }
         }
 
         public Options GetExampleOptions()
@@ -59,9 +65,9 @@ namespace Models.Services
                 };
         }
 
-        public ObjectInventoryDTO GetObject(int id)
+        public async Task<ObjectInventoryDTO> GetObject(int id)
         {
-            var mObject = mapper.Map<ObjectInventory, ObjectInventoryDTO>(db.Get(id).Result);
+            var mObject = mapper.Map<ObjectInventory, ObjectInventoryDTO>(await db.Get(id));
             return mObject;
         }
 
@@ -74,7 +80,8 @@ namespace Models.Services
             var mObject = mapper.Map<IEnumerable<ObjectInventory>, List<ObjectInventoryDTO>>(
                 (from obj in db.GetAllQuery()
                  where
-                    (optionsFiltering.Types != null ? optionsFiltering.Types.Contains(obj.IdType) : true) &&
+                 optionsFiltering != null ? (
+                    (optionsFiltering.Types != null ? optionsFiltering.Types.Contains(obj.GuidebookType.Id) : true) &&
 
                     ((optionsFiltering.Names != null || optionsFiltering.Names != "") ? obj.Name.Contains(optionsFiltering.Names) : true) &&
 
@@ -82,7 +89,7 @@ namespace Models.Services
                         (optionsFiltering.MinCount != null && optionsFiltering.MaxCount == null) ? obj.Count >= optionsFiltering.MinCount :
                             (optionsFiltering.MinCount == null && optionsFiltering.MaxCount != null) ? obj.Count <= optionsFiltering.MaxCount : true) &&
 
-                    (optionsFiltering.Uniqcode != null && optionsFiltering.Uniqcode != "" ? obj.Uniqcode == optionsFiltering.Uniqcode : true)
+                    (optionsFiltering.Uniqcode != null && optionsFiltering.Uniqcode != "" ? obj.Uniqcode == optionsFiltering.Uniqcode : true)) : true
                  select obj).ToList());
 
             if (optionsSorting != null)

@@ -1,5 +1,6 @@
 ﻿using DbRepository.Interfaces;
 using Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +19,9 @@ namespace DbRepository.Repositories
             this.db = context;
         }
 
-        public async void Create(GuidebookTypes item)
+        public async Task Create(GuidebookTypes item)
         {
-            await Task.Run(() => db.Add(item));
+            await db.AddAsync(item);
         }
 
         public IQueryable<GuidebookTypes> GetAllQuery()
@@ -30,32 +31,28 @@ namespace DbRepository.Repositories
 
         public async Task<IEnumerable<GuidebookTypes>> GetAll()
         {
-            return await Task.Run(() => db.GuidebookTypes);
+            return await db.GuidebookTypes.ToListAsync();
         }
 
         public async Task<GuidebookTypes> Get(int id)
         {
-            return await Task.Run(() => db.GuidebookTypes.Find(id));           
+            return await db.GuidebookTypes.FindAsync(id);           
         }
 
-        public async void Update(GuidebookTypes guideBook)
+        public void Update(GuidebookTypes guideBook)
         {
-            await Task.Run(() => {
-                db.GuidebookTypes.Update(guideBook);
-                db.Entry(guideBook).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                });            
+            db.GuidebookTypes.Update(guideBook);
+            db.Entry(guideBook).State = Microsoft.EntityFrameworkCore.EntityState.Modified;         
         }
 
-        public async void Delete(int id)
+        public void Delete(int id)
         {           
-            await Task.Run(() => {
-                var guideBookTypeForDelete = db.GuidebookTypes.Find(id);
-                db.Remove(guideBookTypeForDelete); });
+            db.Remove(db.GuidebookTypes.Find(id));
         }       
 
-        public async void Save()
+        public async Task Save()
         {
-            await Task.Run(() => db.SaveChanges());
+            await db.SaveChangesAsync();
         }
     }
 }

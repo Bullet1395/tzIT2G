@@ -29,12 +29,12 @@ namespace RestApiTz.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] JToken value)
+        public async Task<IActionResult> Post([FromBody] JToken value)
         {
             var newObj = JsonConvert.DeserializeObject<ObjectInventoryView>(value.ToString());
 
             var mObject = mapper.Map<ObjectInventoryView, ObjectInventoryDTO>(newObj);
-            objectService.AddObjectInventory(mObject);
+            await objectService.AddObjectInventory(mObject);
 
             return Ok();
         }
@@ -46,11 +46,11 @@ namespace RestApiTz.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
             if (objectService.GetObject(id) != null)
             {
-                return new ObjectResult(JsonConvert.SerializeObject(objectService.GetObject(id)));
+                return new ObjectResult(JsonConvert.SerializeObject(await objectService.GetObject(id)));
             } else
             {
                 return NotFound();

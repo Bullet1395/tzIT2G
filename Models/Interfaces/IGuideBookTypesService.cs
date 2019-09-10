@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Models.Interfaces
 {
@@ -11,22 +12,20 @@ namespace Models.Interfaces
         /// Добавить новый тип в справочник
         /// </summary>
         /// <param name="newGuidebookType">Новый объект типа</param>
-        void AddTypeGuideBookType(GuidebookTypesDTO newGuidebookType);
+        Task AddTypeGuideBookType(GuidebookTypesDTO newGuidebookType);
 
         /// <summary>
         /// Получить весь список типов
         /// </summary>
         /// <returns></returns>
-        IEnumerable<GuidebookTypesDTO> GetGuideBookTypes();
-
-        
+        Task<IEnumerable<GuidebookTypesDTO>> GetGuideBookTypes();
 
         /// <summary>
         /// Получить тип из справочника по его ID
         /// </summary>
         /// <param name="id">ID типа в справочнике</param>
         /// <returns></returns>
-        GuidebookTypesDTO GetGuideBookType(int id);
+        Task<GuidebookTypesDTO> GetGuideBookType(int id);
 
         /// <summary>
         /// Обновить тип в справочнике

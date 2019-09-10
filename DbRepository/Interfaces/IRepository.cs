@@ -33,7 +33,7 @@ namespace DbRepository.Interfaces
         /// Создать объект
         /// </summary>
         /// <param name="item"></param>
-        void Create(T item);
+        Task Create(T item);
         
         /// <summary>
         /// Обновить объект
@@ -50,6 +50,6 @@ namespace DbRepository.Interfaces
         /// <summary>
         /// Сохранить изменения
         /// </summary>
-        void Save();  
+        Task Save();  
     }
 }

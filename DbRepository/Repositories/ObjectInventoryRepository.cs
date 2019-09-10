@@ -1,5 +1,6 @@
 ﻿using DbRepository.Interfaces;
 using Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +18,9 @@ namespace DbRepository.Repositories
             this.db = context;
         }
 
-        public async void Create(ObjectInventory obj)
+        public async Task Create(ObjectInventory obj)
         {
-            await Task.Run(() => db.Add(obj));
+            await db.AddAsync(obj);
         }
 
         public IQueryable<ObjectInventory> GetAllQuery()
@@ -29,36 +30,29 @@ namespace DbRepository.Repositories
 
         public async Task<IEnumerable<ObjectInventory>> GetAll()
         {
-            return await Task.Run(() => db.ObjectsInventory);
+            return await db.ObjectsInventory.ToListAsync();
         }
 
         public async Task<ObjectInventory> Get(int id)
         {
-            return await Task.Run(() => db.ObjectsInventory.Find(id));
+            return await  db.ObjectsInventory.FindAsync(id);
         }
 
-        public async void Update(ObjectInventory obj)
+        public void Update(ObjectInventory obj)
         {
-            await Task.Run(() =>
-            {
-                db.ObjectsInventory.Update(obj);
-                db.Entry(obj).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            });            
+            db.ObjectsInventory.Update(obj);
+            db.Entry(obj).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
         }
 
-        public async void Delete(int id)
+        public void Delete(int id)
         {
-            await Task.Run(() =>
-            {
-                var guidBookForDelete = db.ObjectsInventory.Find(id);
-                db.Remove(guidBookForDelete);
-            });
-            
+            var guidBookForDelete = db.ObjectsInventory.Find(id);
+            db.Remove(guidBookForDelete);
         }
 
-        public async void Save()
+        public async Task Save()
         {
-            await Task.Run(() => db.SaveChanges());
+            await db.SaveChangesAsync();
         }
     }
 }

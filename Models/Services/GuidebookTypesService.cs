@@ -24,22 +24,22 @@ namespace Models.Services
             mapper = mapperConf;
         }
 
-        public void AddTypeGuideBookType(GuidebookTypesDTO newGuidebookType)
+        public async Task AddTypeGuideBookType(GuidebookTypesDTO newGuidebookType)
         {
             var mGuidebookType = mapper.Map<GuidebookTypesDTO, GuidebookTypes>(newGuidebookType);
-            db.Create(mGuidebookType);
-            db.Save();
+            await db.Create(mGuidebookType);
+            await db.Save();
         }
 
-        public GuidebookTypesDTO GetGuideBookType(int id)
+        public async Task<GuidebookTypesDTO> GetGuideBookType(int id)
         {
-            var mGuidebookType = mapper.Map<GuidebookTypes, GuidebookTypesDTO>(db.Get(id).Result);
+            var mGuidebookType = mapper.Map<GuidebookTypes, GuidebookTypesDTO>(await db.Get(id));
             return mGuidebookType;
         }
 
-        public IEnumerable<GuidebookTypesDTO> GetGuideBookTypes()
+        public async Task<IEnumerable<GuidebookTypesDTO>> GetGuideBookTypes()
         {
-            var mGuidebookTypesList = mapper.Map<IEnumerable<GuidebookTypes>, List<GuidebookTypesDTO>>(db.GetAll().Result);
+            var mGuidebookTypesList = mapper.Map<IEnumerable<GuidebookTypes>, List<GuidebookTypesDTO>>(await db.GetAll());
             return mGuidebookTypesList;
         }
 

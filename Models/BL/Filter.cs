@@ -38,7 +38,7 @@ namespace Models.BL
         {
             return (from obj in objectsInventory
                                  where
-                                     filtres.Types != null ? filtres.Types.Contains(obj.IdType) : true &&
+                                     filtres.Types != null ? filtres.Types.Contains(obj.GuidebookType.Id) : true &&
                                      (filtres.Names != null && filtres.Names != "") ? obj.Name.Contains(filtres.Names) : true &&
                                      ((filtres.MinCount != null && filtres.MaxCount != null) ? obj.Count >= filtres.MinCount && obj.Count <= filtres.MaxCount :
                                         (filtres.MinCount != null && filtres.MaxCount == null) ? obj.Count >= filtres.MinCount :

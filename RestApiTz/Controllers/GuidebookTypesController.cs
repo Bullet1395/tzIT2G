@@ -29,28 +29,28 @@ namespace RestApiTz.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] JToken value)
+        public async Task<IActionResult> Post([FromBody] JToken value)
         {
             var newType = JsonConvert.DeserializeObject<GuidebookTypesView>(value.ToString());
                         
             var mGuidebookType = mapper.Map<GuidebookTypesView, GuidebookTypesDTO>(newType);
-            guideBookTypesService.AddTypeGuideBookType(mGuidebookType);
+            await guideBookTypesService.AddTypeGuideBookType(mGuidebookType);
 
             return Ok();
         }
 
         [HttpGet]
-        public JArray Get()
+        public async Task<JArray> Get()
         {
-            var mGuidebookTypesList = mapper.Map<IEnumerable<GuidebookTypesDTO>, List<GuidebookTypesView>>(guideBookTypesService.GetGuideBookTypes());
+            var mGuidebookTypesList = mapper.Map<IEnumerable<GuidebookTypesDTO>, List<GuidebookTypesView>>(await guideBookTypesService.GetGuideBookTypes());
 
             return JArray.Parse(JsonConvert.SerializeObject(mGuidebookTypesList));
         }
 
         [HttpGet("{id}", Name = "GetGuidbook")]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            var mGuidebookType = mapper.Map<GuidebookTypesDTO, GuidebookTypesView>(guideBookTypesService.GetGuideBookType(id));
+            var mGuidebookType = mapper.Map<GuidebookTypesDTO, GuidebookTypesView>(await guideBookTypesService.GetGuideBookType(id));
 
             if (mGuidebookType != null)
             {
